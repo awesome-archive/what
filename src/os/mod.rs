@@ -1,11 +1,13 @@
 #[cfg(target_os = "linux")]
-mod linux;
+pub(self) mod linux;
 
-#[cfg(target_os = "linux")]
-pub use linux::*;
+#[cfg(any(target_os = "macos", target_os = "freebsd"))]
+pub(self) mod lsof;
 
-#[cfg(target_os = "macos")]
-mod macos;
+#[cfg(any(target_os = "macos", target_os = "freebsd"))]
+mod lsof_utils;
 
-#[cfg(target_os = "macos")]
-pub use macos::*;
+mod errors;
+mod shared;
+
+pub use shared::*;
